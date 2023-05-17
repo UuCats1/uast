@@ -1,0 +1,83 @@
+<头>
+
+<title>星空特效展示例</title>
+
+<样式>
+
+身体 {
+
+背景色：#000；
+
+}
+
+.stars {
+
+  高度：100%；
+
+  宽度：100%；
+
+  位置：固定；
+
+  顶部：0；
+
+  左：0；
+
+  }
+
+.闪烁{
+
+位置：绝对；
+
+  宽度：2px；
+
+  高度：2px；
+
+  背景：#fff；
+
+  框阴影：1px 1px 2px #fff；
+
+  动画：闪烁 1s 无限缓入缓出；
+
+}
+
+@keyframes 闪烁{
+
+0% { 不透明度：1; }
+
+  50% { 不透明度：0；}
+
+  100% { 不透明度: 1; }
+
+}
+
+</样式>
+
+</头>
+
+<正文>
+
+<div class="星星">
+
+<脚本>
+
+对于 (var i = 0; i < 100; i++) {
+
+var star = document.createElement('div');
+
+star.className = '闪烁';
+
+star.style.left = Math.floor(Math.random() * 100) + '%';
+
+  star.style.top = Math.floor(Math.random() * 100) + '%';
+
+  document.body.appendChild(星号);
+
+}
+
+</脚本>
+
+</div>
+
+</body>
+
+</html>的
