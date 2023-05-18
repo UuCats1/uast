@@ -1,3 +1,33 @@
+
+<script>
+    var loadCss = document.createElement("style");
+    loadCss.type = "text/css";
+    loadCss.innerHTML = "@keyframes loop { 0%{transform: rotate(0deg);} 100%{ transform: rotate(360deg);}";
+    document.head.appendChild(loadCss);
+
+    var p = document.createElement("p");
+    p.id = "loading";
+    var pic = document.createElement("picture");
+    p.style.cssText = "display: none;width: 100px;height: 100px;background: rgba(255, 255, 255,0);position: fixed;top: 50%;left: 50%;z-index: 999999;";
+    pic.style.cssText = "display: block;width: 50px;height: 50px;border-radius: 50%;box-shadow: 0 2px 0 #666; animation: loop 1s infinite;-webkit-animation: loop 1s infinite;";
+    p.appendChild(pic);
+    document.body.appendChild(p);
+    document.getElementById('btnQuery').onclick = function () {//目标控件，换成需要的ID
+        document.getElementById("loading").style.display = 'block';
+    }
+
+document.onreadystatechange = function () {
+    if (document.readyState == "complete") {//检测加载完成
+        try {
+            document.getElementById("loading").style.display = 'none';
+            //document.body.removeChild(p);
+        } catch (e) {
+
+        }
+    }
+}
+</script>
+
 <!DOCTYPE html>
 
 <html>
