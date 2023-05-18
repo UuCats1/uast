@@ -1,3 +1,25 @@
+<span class="hljs-meta"><!DOCTYPE html></span>
+<span class="hljs-tag"><<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">"en"</span>></span>
+<span class="hljs-tag"><<span class="hljs-name">head</span>></span>
+	<span class="hljs-tag"><<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">"utf-8"</span>></span>
+	<span class="hljs-tag"><<span class="hljs-name">title</span>></span>HTML实现进度条 - 编程狮(w3cschool.cn)<span class="hljs-tag"></<span class="hljs-name">title</span>></span>
+<span class="hljs-tag"></<span class="hljs-name">head</span>></span>
+<span class="hljs-tag"><<span class="hljs-name">body</span>></span>
+	<span class="hljs-tag"><<span class="hljs-name">progress</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"progress"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"0"</span> <span class="hljs-attr">max</span>=<span class="hljs-string">"100"</span>></span><span class="hljs-tag"></<span class="hljs-name">progress</span>></span>
+	<span class="hljs-tag"><<span class="hljs-name">button</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">"load(100)"</span>></span>下载<span class="hljs-tag"></<span class="hljs-name">button</span>></span>
+	<span class="hljs-tag"><<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text/javascript"</span>></span><span class="javascript">
+		<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">load</span>(<span class="hljs-params">n</span>)</span>{
+			<span class="hljs-keyword">if</span> (n==<span class="hljs-number">0</span>) {alert(<span class="hljs-string">"下载完成"</span>)};
+			<span class="hljs-keyword">var</span> progress=<span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"progress"</span>);
+			n=n<span class="hljs-number">-1</span>;
+			task=<span class="hljs-number">100</span>-n;
+			progress.value=task;
+			setTimeout(<span class="hljs-string">"load("</span>+n+<span class="hljs-string">")"</span>,<span class="hljs-number">100</span>);
+		}
+	</span><span class="hljs-tag"></<span class="hljs-name">script</span>></span>
+<span class="hljs-tag"></<span class="hljs-name">body</span>></span>
+<span class="hljs-tag"></<span class="hljs-name">html</span>></span>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
