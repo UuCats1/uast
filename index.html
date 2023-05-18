@@ -1,3 +1,113 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>json文件数据渲染</title>
+
+  <script src="js/jquery.js"></script>
+
+  <script type="text/javascript" src="js/data.json"></script>
+
+  <style>
+
+    td{
+
+      width: 120px;
+
+      padding-left: 35px;
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <div>
+
+    <table>
+
+      <thead>
+
+        <tr>
+
+          <td>姓名</td>
+
+          <td>身份证</td>
+
+          <td>材料</td>
+
+          <td>id</td>
+
+        </tr>
+
+      </thead >
+
+      <tbody id="jsonTip">
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+  <script>
+
+    // 页面加载完后立刻调用getDate方法
+
+    $(function () {
+
+      
+
+	 console.log("json文件数据", jsonData);	 getShow(jsonData);
+
+    })
+
+	  function getShow(data){
+
+     var $jsontip=$("#jsonTip");
+
+          // 定义一个变量存储要显示的数据
+
+          var s="";
+
+          // 清空数据
+
+          $jsontip.empty();
+
+          // 遍历拿到的数据（此处采用each方法，也可以采用for循环）
+
+          $.each(data.rows,function(index,info){
+
+            s = "<tr><td>" + info.RealName + "</td><td>" + info.CardID + "</td><td>" +
+
+            info.StuffPath + "</td><td>" + info.AdminId + "</td></tr>";
+
+            // 将要展示的数据追加到页面
+
+            $jsontip.append(s);
+
+          })
+
+    } 
+
+    
+
+  </script>
+
+</body>
+
+</html>
+
 <script src="my.js"></script>
 
 <!DOCTYPE html>
