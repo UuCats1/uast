@@ -1,6 +1,148 @@
 <script src=”/main/jjjs.js”></script>
 
+//jjj.js
+//获取浏览器语言
+var localLanguage;
+// console.log(navigator);
+if (navigator.language) {
+localLanguage = navigator.language;
+}else {
+localLanguage = navigator.browserLanguage;
+}
+
+// 检查是否支持此语言翻译，不支持就把面板设为中文，或你想要的语言，只能是以上80种语言之一
+var allLanguage = ‘de,hi,lt,hr,lv,ht,hu,zh-CN,hy,uk,mg,id,ur,mk,ml,mn,af,mr,uz,ms,el,mt,is,it,my,es,et,eu,ar,pt-PT,ja,ne,az,fa,ro,nl,en-GB,no,be,fi,ru,bg,fr,bs,sd,se,si,sk,sl,ga,sn,so,gd,ca,sq,sr,kk,st,km,kn,sv,ko,sw,gl,zh-TW,pt-BR,co,ta,gu,ky,cs,pa,te,tg,th,la,cy,pl,da,en,tr’.split(‘,’);
+
+if($.inArray(localLanguage,allLanguage)==-1){
+
+localLanguage = “zh-CN”;
+}
+
+if(localLanguage!=’zh-CN’){
+// 资源请求路径
+
+var resourcesUrl = ‘/api/html/googleTrans/trans’;
+// var resourcesUrl = ctx+”js/plugins/googleTrans”;//这里应该写你的服务器资源地址
+// 这里设置翻译面板的语言，这里通过浏览器获取本地语言，你也可以自己设置
+// 支持以下80种语言翻译
+
+console.log(“当前语言环境”+localLanguage);
+// alert(localLanguage);
+
+// window.οnlοad=function(){
+function googleTranslateElementInit() {
+
+new google.translate.TranslateElement(
+{
+
+pageLanguage: ‘auto’,
+// 一共80种语言选择，这个是你需要翻译的语言，比如你只需要翻译成越南和英语，这里就只写en,vi
+// includedLanguages:
+// ‘de,hi,lt,hr,lv,ht,hu,zh-CN,hy,uk,mg,id,ur,mk,ml,mn,af,mr,uz,ms,el,mt,is,it,my,es,et,eu,ar,pt-PT,ja,ne,az,fa,ro,nl,en-GB,no,be,fi,ru,bg,fr,bs,sd,se,si,sk,sl,ga,sn,so,gd,ca,sq,sr,kk,st,km,kn,sv,ko,sw,gl,zh-TW,pt-BR,co,ta,gu,ky,cs,pa,te,tg,th,la,cy,pl,da,tr’,
+
+includedLanguages: ‘zh-CN,en’,
+// 选择语言的样式，
+layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+// 自动显示翻译横幅，就是翻译后顶部出现的那个，有点丑，设置这个属性不起作用的话，请看文章底部的其他方法
+autoDisplay: false,
+},
+‘trans’// 触发按钮的id
+);
+
+// 自定义按钮样式，因为没有api，通过dom+覆盖样式的方法实现，请查看顶部的style部分
+$(“.goog-te-gadget-icon”).remove();
+$(“.goog-te-menu-value”).remove();
+
+}
+window.onload=function(){
+//
+// reload 自动强制将网站代码转成英文
+var isLanguage= GetCookie(‘googtrans’);
+// 初始化发现浏览器语言是英文的强制将页面文字转成英文
+if(isLanguage==null && localLanguage==’en’){
+
+// 设置cookie
+SetCookie(“googtrans”, ‘/zh-CN/en’, 3, “/”, window.location.host, false);
+var hrefarr=window.location.host.split(‘.’);
+
+// 设置cookie
+var domain=”.”+hrefarr[1]+’.’+hrefarr[2];
+SetCookie(“googtrans”, ‘/zh-CN/en’, 3, “/”, domain, false);
+
+$(‘.goog-te-combo’).val(‘en’);
+// reload强制转成英文
+window.location = ‘#googtrans(en|en)’;
+location.reload();
+
+}
+}
+
+var googtrans_script = document.createElement(“script”);
+googtrans_script.type = “text/javascript”;
+googtrans_script.charset = “UTF-8”;
+googtrans_script.src = ‘/api/html/googleTrans/trans/js/element.js?cb=googleTranslateElementInit’;
+document.body.appendChild(googtrans_script);
+}
+
+// 设置cookie
+function SetCookie(a, c, b, d, e, g) {
+
+var f = new Date;
+
+f.setTime(f.getTime() + b * 86400);
+
+b == null || f.toGMTString();
+
+document.cookie = a + “=” + escape(c) + (d == null ? “” : “;path=” + d) + (e == null ? “” : “;domain=” + e) + (g == true ? “;secure” : “”)
+
+}
+
+// 获取cookie
+function GetCookie(a) {
+
+var c = null,
+b = document.cookie + “;”,
+d = a + “=”,
+a = b.indexOf(d);
+
+a != -1 && (a += d.length, c = b.indexOf(“;”, a), c = unescape(b.substring(a, c)));
+
+return c
+
+}
+
+function contains(array, obj) {
+
+var i = a.length;
+
+while (i–) {
+
+if (a[i] === obj) {
+
+return true;
+
+}
+
+}
+
+return false;
+
+}
+
 <iframe width="479" height="281" src="https://www.youtube.com/embed/S_zQn0XHBMA" title="当游戏难度是“亚洲人”等级别🎮当“亚洲人”是难度模式 | Steven He 官方中文翻译" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+pageLanguage: ‘auto’,
+// 一共80种语言选择，这个是你需要翻译的语言，比如你只需要翻译成越南和英语，这里就只写en,vi
+// includedLanguages:
+// ‘de,hi,lt,hr,lv,ht,hu,zh-CN,hy,uk,mg,id,ur,mk,ml,mn,af,mr,uz,ms,el,mt,is,it,my,es,et,eu,ar,pt-PT,ja,ne,az,fa,ro,nl,en-GB,no,be,fi,ru,bg,fr,bs,sd,se,si,sk,sl,ga,sn,so,gd,ca,sq,sr,kk,st,km,kn,sv,ko,sw,gl,zh-TW,pt-BR,co,ta,gu,ky,cs,pa,te,tg,th,la,cy,pl,da,tr’,
+includedLanguages: ‘zh-CN,en’,
+// 选择语言的样式，
+layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+// 自动显示翻译横幅，就是翻译后顶部出现的那个，有点丑，设置这个属性不起作用的话，请看文章底部的其他方法
+autoDisplay: false,
+},
+‘trans’// 触发按钮的id
+);
 
 <iframe width="479" height="281" src="https://www.youtube.com/embed/iRqfJL-twiQ" title="【BOFU2017】尊師　～The Guru～(BMS edit) 【BGA】" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
