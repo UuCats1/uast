@@ -134,3 +134,55 @@ document.getElementById('ggad1').innerHTML="";
 </body>
 
 </html>
+
+var jsonData = {
+
+    "total": 1,
+
+    "rows": [
+
+        {
+
+            "row": 1,
+
+            "RealName": "111",
+
+            "CardID": "2222",
+
+            "StuffPath": "3333",
+
+            "AdminId": 1
+
+        },
+
+                {
+
+            "row": 1,
+
+            "RealName": "111",
+
+            "CardID": "2222",
+
+            "StuffPath": "3333",
+
+            "AdminId": 1
+
+        },
+
+                {
+
+            "row": 1,
+
+            "RealName": "111",
+
+            "CardID": "2222",
+
+            "StuffPath": "3333",
+
+            "AdminId": 1
+
+        }
+
+    ]
+
+}
