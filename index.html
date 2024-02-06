@@ -1,123 +1,58 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh">
 
 <head>
-<style>
-header {
-    background-color:black;
-    color:white;
-    text-align:center;
-    padding:5px;	 
-}
-nav {
-    line-height:30px;
-    background-color:#eeeeee;
-    height:300px;
-    width:100px;
-    float:left;
-    padding:5px;	      
-}
-section {
-    width:350px;
-    float:left;
-    padding:10px;	 	 
-}
-footer {
-    background-color:black;
-    color:white;
-    clear:both;
-    text-align:center;
-    padding:5px;	 	 
-}
-</style>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+  <meta name="description" content="初音未来版本的通过点击/触摸播放声音并出现变化图案的互动内容。">
+  <title>Music</title>
+  <link rel="apple-touch-icon" href="icon.png">
+  <link href="https://fonts.loli.net/css?family=Quicksand:400" rel="stylesheet">
+  <link charset="UTF-8" href="shared/sp/css/common.css" rel="stylesheet">
+  <link charset="utf-8" href="css/mikutap.css" rel="stylesheet">
+  <script charset="utf-8" src="https://cdnjs.loli.net/ajax/libs/jquery/2.2.4/jquery.min.js" type="text/javascript"></script>
+  <script charset="utf-8" src="https://cdnjs.loli.net/ajax/libs/pixi.js/3.0.11/pixi.min.js" type="text/javascript"></script>
+  <script charset="utf-8" src="https://cdnjs.loli.net/ajax/libs/gsap/1.19.1/TweenMax.min.js" type="text/javascript"></script>
+  <script charset="UTF-8" src="shared/js/common-2.min.js" type="text/javascript"></script>
+  <script charset="utf-8" src="js/mikutap.min.js" type="text/javascript"></script>
 </head>
 
 <body>
+  <div id="view"></div>
+  <div id="scene_top">
+    <h1>music</h1>
+    <div id="ng">
+      <p class="atten">十分抱歉<br>您的浏览器并不支持本页面需要的特性</p>
+    </div>
+    <div class="ok">
+      <p id="bt_start"><a href="">!开始!</a></p>
+       <p id="bt_about"><a href="">*关于*</a></p>
+    </div>
+    <div class="ok">
+      <p class="attention">※请打开声音并享受。</p>
+    </div>
+  </div>
+  <div id="scene_loading">
+    <hr size="1" color="#fff"> </div>
+  <div id="scene_main">
+    <div class="set">
+      <p class="attention">点击 &amp; 拖动或者按任意键!</p>
+      <p id="bt_backtrack"><a href="">背景音乐: 开启</a></p>
+    </div>
+  </div>
 
-<header>
-<h1>Hello kitty</h1>
-</header>
+  <div id="about_cover"></div>
+  <div id="about">
+    <div id="about_in">
+      <p class="close"><span id="bt_close">×</span></p>
+      <p class="con"> 作者 QQ <a href="https://jq.qq.com/?_wv=1027&k=5iaNOYY" target="_blank">1907475131</a> </p>
+      <p class="link"> qq群 <a href="https://jq.qq.com/?_wv=1027&k=5iaNOYY" target="_blank">823423315</a> </p>
+    </div>
+  </div>
 
-<nav>
-Stop<br>
-Even<br>
-Same<br>
-</nav>
-
-<section>
-<h1>Hello kitty</h1>
-<p>
-ChatGPT</p>
-<p>
-OpenAI
-</p>
-</section>
-
-<footer>
-Copyright Reoim@P
-</footer>
-
+  <div id="bt_fs">□全屏显示</div>
 </body>
+
 </html>
-<!DOCTYPE html>
-<html lang="en-US">
-<head>
-<style>
-.city {
-float: left;
-margin: 5px;
-padding: 15px;
-width: 300px;
-height: 300px;
-border: 1px solid black;
-} 
-</style>
-</head>
-
-<body>
-
-<h1>uucats1</h1>
-<h2>Resize this responsive page!</h2>
-<br>
-
-<div class="col-md-4">
-<h2>London</h2>
-<p>London is the capital city of England.</p>
-<p>It is the most populous city in the United Kingdom,
-with a metropolitan area of over 13 million inhabitants.</p>
-</div>
-
-<div class="col-md-4">
-<h2>Paris</h2>
-<p>Paris is the capital and most populous city of France.</p>
-</div>
-
-<div class="col-md-4">
-<h2>Tokyo</h2>
-<a>Hello kitty</a>
-</div>
-
-</body>
-</html>
-<div class="col-md-4">
-<p>® 2021-2023 by Reoim@P All Cubs game</p>
-</div>
-<!DOCTYPE html>
-<html>
-<body>
-
-<object height="100" width="300" data="Kevin MacLeod - Leopard Print Elevator.mp3"></object>
-<p><b>歌曲名：</b>Kevin MacLeod - Leopard Print Elevator</p>
-
-</body>
-</html>
-<!DOCTYPE html>
-<html>
-<body>
-
-<object height="100" width="300" data="Rider - 尊師 ～The Guru～ (尊师).mp3"></object>
-<p><b>歌曲名：</b>Rider - 尊師 ～The Guru～ </p>
-
-</body>
-</html>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/miD_TWmdGIY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
