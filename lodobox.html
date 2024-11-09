@@ -43,7 +43,7 @@
     }
 
     h2 {
-      font-size: 24px;
+      font-size: 4vw;
       font-weight: 500;
       margin-bottom: 20px;
       color: #333;
@@ -51,9 +51,10 @@
 
     /* 输入框样式 */
     input {
-      width: 100%;
+      width: 80%;
+      max-width: 400px;
       padding: 12px;
-      font-size: 16px;
+      font-size: 2vw;
       margin-bottom: 16px;
       border: 1px solid #ccc;
       border-radius: 8px;
@@ -70,9 +71,10 @@
 
     /* 按钮样式 */
     button {
-      width: 100%;
+      width: 80%;
+      max-width: 400px;
       padding: 14px;
-      font-size: 18px;
+      font-size: 2.5vw;
       color: #6200ea; /* 按钮文字颜色 */
       background-color: transparent; /* 背景透明 */
       border: 2px solid #6200ea; /* 按钮边框 */
@@ -97,7 +99,8 @@
     #qrcode {
       margin-top: 20px;
       width: 100%;
-      height: 250px; /* 确保二维码显示足够大 */
+      height: auto;
+      max-width: 500px;
       display: flex;
       justify-content: center;
       opacity: 0; /* 初始状态下不可见 */
@@ -117,6 +120,38 @@
       max-height: 100%;
     }
 
+    /* 响应式设计 */
+    @media (max-width: 768px) {
+      h2 {
+        font-size: 6vw;
+      }
+
+      input {
+        font-size: 4vw;
+        width: 90%;
+      }
+
+      button {
+        font-size: 5vw;
+        width: 90%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h2 {
+        font-size: 8vw;
+      }
+
+      input {
+        font-size: 5vw;
+        width: 90%;
+      }
+
+      button {
+        font-size: 6vw;
+        width: 90%;
+      }
+    }
   </style>
 </head>
 <body>
