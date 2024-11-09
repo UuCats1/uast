@@ -237,23 +237,18 @@
                 return;
             }
 
-            try {
-                // 生成条形码
-                JsBarcode("#barcodeSvg", inputText, {
-                    format: "EAN13", // EAN13 格式
-                    lineColor: "#000000",
-                    width: 3,
-                    height: 80,
-                    displayValue: true,
-                    font: "monospace",
-                    fontSize: 18
-                });
+            JsBarcode("#barcodeSvg", inputText, {
+                format: "EAN13", // 更改为 EAN13 格式
+                lineColor: "#000000",
+                width: 3,
+                height: 80,
+                displayValue: true,
+                font: "monospace",
+                fontSize: 18
+            });
 
-                // 显示条形码区域
-                document.getElementById('barcode').classList.remove('hidden');
-            } catch (error) {
-                console.error("条形码生成失败:", error);
-            }
+            // 显示条形码区域
+            document.getElementById('barcode').classList.remove('hidden');
         }
     </script>
 
