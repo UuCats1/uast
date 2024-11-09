@@ -21,10 +21,18 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
-      background-color: #fafafa;
       margin: 0;
       overflow: hidden; /* 防止滚动条出现 */
       animation: fadeIn 1s ease-out; /* 网页加载时的动画 */
+      background: radial-gradient(circle, #6200ea, #3700b3); /* 圆形渐变背景 */
+      position: relative;
+      animation: rotateBg 10s infinite linear; /* 背景旋转效果 */
+    }
+
+    /* 背景旋转动画 */
+    @keyframes rotateBg {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
     /* 页面加载动画 */
@@ -120,27 +128,6 @@
       max-height: 100%;
     }
 
-    /* 底部友情链接样式 */
-    .footer {
-      position: absolute;
-      bottom: 20px;
-      font-size: 14px;
-      color: #555;
-      text-align: center;
-      width: 100%;
-    }
-
-    .footer a {
-      color: #6200ea;
-      text-decoration: none;
-      margin: 0 10px;
-      transition: color 0.3s;
-    }
-
-    .footer a:hover {
-      color: #3700b3;
-    }
-
   </style>
 </head>
 <body>
@@ -150,13 +137,6 @@
     <input type="text" id="textInput" placeholder="请输入文本">
     <button onclick="generateQRCode()">生成二维码</button>
     <div id="qrcode"></div>
-  </div>
-
-  <!-- 底部友情链接 -->
-  <div class="footer">
-    <a href="http://zzfrp.zzcom.top" target="_blank">仔仔在线</a> |
-    <a href="https://example.com" target="_blank">待添加</a> |
-    <a href="https://example.com" target="_blank">待添加</a>
   </div>
 
   <script>
