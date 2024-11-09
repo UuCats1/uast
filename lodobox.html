@@ -103,7 +103,8 @@
       height: 250px; /* 确保二维码显示足够大 */
       display: flex;
       justify-content: center;
-      animation: bounceIn 1s ease-out;
+      opacity: 0; /* 初始状态下不可见 */
+      animation: bounceIn 1s ease-out forwards; /* 动画的应用 */
     }
 
     /* QR码显示的甩尾动画 */
@@ -147,6 +148,9 @@
           if (error) {
             console.error(error);
             alert("二维码生成失败，请重试！");
+          } else {
+            // 让二维码显示区域触发动画效果
+            qrcodeContainer.style.opacity = 1; 
           }
         });
       } else {
