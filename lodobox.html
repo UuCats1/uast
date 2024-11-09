@@ -140,34 +140,7 @@
       transform: translateY(2px);
     }
 
-    /* 功能选项栏 */
-    #options {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      background-color: rgba(255, 255, 255, 0.7);
-      border-radius: 10px;
-      padding: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      transform: translateX(-100%);
-      animation: slideIn 0.5s ease forwards;
-      z-index: 999;
-    }
-
-    @keyframes slideIn {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(0); }
-    }
-
-    /* 甩尾动画效果 */
-    @keyframes shakeTail {
-      0% { transform: rotate(0deg); }
-      25% { transform: rotate(10deg); }
-      50% { transform: rotate(-10deg); }
-      75% { transform: rotate(5deg); }
-      100% { transform: rotate(0deg); }
-    }
-
+    /* 左上角齿轮按钮 */
     #gear {
       position: fixed;
       top: 20px;
@@ -180,6 +153,34 @@
 
     #gear:hover {
       transform: rotate(90deg);
+    }
+
+    /* 页面菜单显示 */
+    #menu {
+      position: fixed;
+      top: 50px;
+      left: 20px;
+      background-color: rgba(255, 255, 255, 0.7);
+      border-radius: 10px;
+      padding: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      display: none;
+      z-index: 1000;
+    }
+
+    #menu button {
+      display: block;
+      margin: 10px 0;
+      padding: 10px;
+      background-color: #6200ea;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    #menu button:hover {
+      background-color: #3700b3;
     }
 
     /* 响应式设计 */
@@ -229,47 +230,60 @@
 <body>
 
   <!-- 齿轮按钮 -->
-  <span id="gear" class="material-icons" onclick="toggleOptions()">settings</span>
+  <span id="gear" class="material-icons" onclick="toggleMenu()">settings</span>
 
-  <!-- 功能选项栏 -->
-  <div id="options">
-    <button onclick="alert('功能选项 1')">功能选项 1</button>
-    <button onclick="alert('功能选项 2')">功能选项 2</button>
-    <button onclick="alert('功能选项 3')">功能选项 3</button>
+  <!-- 页面菜单 -->
+  <div id="menu">
+    <button onclick="showQRCodePage()">生成二维码</button>
+    <button onclick="showFileUploadPage()">上传二维码图片</button>
   </div>
 
-  <!-- 直接展示内容 -->
-  <h2>LodoBox</h2>
-  <input type="text" id="textInput" placeholder="请输入文本">
-  <button onclick="generateQRCode()">生成二维码</button>
-
-  <!-- 文件上传按钮 -->
-  <input type="file" id="fileInput" accept="image/*">
-  <label for="fileInput">上传二维码图片</label>
-
-  <!-- QR Code 显示区域 -->
-  <div id="qrcode"></div>
+  <!-- 页面内容 -->
+  <div id="content">
+    <h2>LodoBox</h2>
+    <div id="pageQRCode" style="display: none;">
+      <input type="text" id="textInput" placeholder="请输入文本">
+      <button onclick="generateQRCode()">生成二维码</button>
+      <div id="qrcode"></div>
+    </div>
+    <div id="pageFileUpload" style="display: none;">
+      <input type="file" id="fileInput" accept="image/*">
+      <label for="fileInput">上传二维码图片</label>
+    </div>
+  </div>
 
   <script>
+    function toggleMenu() {
+      const menu = document.getElementById('menu');
+      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function showQRCodePage() {
+      document.getElementById('pageQRCode').style.display = 'block';
+      document.getElementById('pageFileUpload').style.display = 'none';
+      toggleMenu(); // 关闭菜单
+    }
+
+    function showFileUploadPage() {
+      document.getElementById('pageQRCode').style.display = 'none';
+      document.getElementById('pageFileUpload').style.display = 'block';
+      toggleMenu(); // 关闭菜单
+    }
+
     function generateQRCode() {
       const text = document.getElementById('textInput').value;
       const qrcodeContainer = document.getElementById('qrcode');
       
       if (text.trim()) {
-        // 清空上一个二维码
-        qrcodeContainer.innerHTML = "";
-
-        // 创建一个新的 canvas 元素
+        qrcodeContainer.innerHTML = ""; // 清空上一个二维码
         const canvas = document.createElement('canvas');
         qrcodeContainer.appendChild(canvas);
 
-        // 使用二维码库生成二维码并绘制到 canvas 元素里
         QRCode.toCanvas(canvas, text, function(error) {
           if (error) {
             console.error(error);
             alert("二维码生成失败，请重试！");
           } else {
-            // 让二维码显示区域触发动画效果
             qrcodeContainer.style.opacity = 1; 
           }
         });
@@ -305,15 +319,6 @@
         reader.readAsDataURL(file);
       }
     });
-
-    function toggleOptions() {
-      const options = document.getElementById('options');
-      const gear = document.getElementById('gear');
-      // 触发甩尾动画效果
-      options.style.animation = 'shakeTail 0.5s ease';
-      options.style.transform = options.style.transform === 'translateX(0)' ? 'translateX(-100%)' : 'translateX(0)';
-      gear.style.transform = gear.style.transform === 'rotate(90deg)' ? 'rotate(0deg)' : 'rotate(90deg)';
-    }
   </script>
 
 </body>
