@@ -42,7 +42,7 @@
         }
 
         h1 {
-            color: #4CAF50;
+            color: #9DAF50;
             font-size: 2rem;
             margin-bottom: 15px;
         }
@@ -57,7 +57,7 @@
         button.generate-btn {
             padding: 14px 28px;
             font-size: 1.2rem;
-            background-color: #4CAF50; /* 更改为绿色 */
+            background-color: #A52F50; /* 更改为绿色 */
             color: white;
             border: none;
             border-radius: 8px;
@@ -81,7 +81,7 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        /* 输入框样式 - Android 15 风格 */
+        /* 输入框样式 - MDUI 风格 */
         .input-group input {
             width: 100%;
             padding: 14px 16px;
@@ -100,7 +100,7 @@
             box-shadow: 0 0 6px rgba(98, 0, 238, 0.4);
         }
 
-        /* 样式 - Android 15 风格 Tab 按钮 */
+        /* 样式 - MDUI 风格 Tab 按钮 */
         .tab {
             padding: 12px 24px;
             cursor: pointer;
@@ -161,7 +161,7 @@
 <body>
 
     <div class="container">
-        <h1>LodoBox</h1>
+        <h1>条形码和二维码生成器</h1>
 
         <!-- Tab buttons -->
         <button class="tab mdui-btn" onclick="showSection('qrCodeSection')">二维码生成</button>
@@ -186,14 +186,14 @@
 
         <!-- 条形码生成部分 -->
         <div id="barcodeSection" class="hidden">
-            <p>请输入12位数字生成UPC条形码：</p>
+            <p>请输入13位数字生成EAN-13条形码：</p>
             <div class="input-group">
-                <input type="text" id="barcodeInputText" placeholder="请输入UPC条形码内容" />
+                <input type="text" id="barcodeInputText" placeholder="请输入EAN-13条形码内容" />
             </div>
             <button class="generate-btn" onclick="generateBarcode()">生成条形码</button>
 
             <div id="barcode" class="hidden">
-                <svg id="barcodeSvg"></svg>  <!-- UPC-A 条形码 SVG -->
+                <svg id="barcodeSvg"></svg>  <!-- EAN-13 条形码 SVG -->
             </div>
 
             <div class="info-text">
@@ -229,17 +229,17 @@
             document.getElementById('qrcode').classList.remove('hidden');
         }
 
-        // 生成条形码 (UPC-A)
+        // 生成条形码 (EAN-13)
         function generateBarcode() {
             const inputText = document.getElementById('barcodeInputText').value;
             if (!inputText || isNaN(inputText) || inputText.length !== 13) {
-                alert("请输入有效的12位数字 UPC 编号");
+                alert("输入有效的13位数字 EAN-13 条形号码");
                 return;
             }
 
             JsBarcode("#barcodeSvg", inputText, {
-                format: "UPC", // 更改为 UPC 格式
-                lineColor: "#000000",
+                format: "EAN13", // 更改为 EAN13 格式
+                lineColor: "#FFFFFF",
                 width: 3,
                 height: 80,
                 displayValue: true,
