@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>条形码和二维码生成器</title>
+    <title>百宝箱</title>
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mdui@0.4.3/dist/js/mdui.min.js"></script>
 
     <style>
-        /* 基本样式设置 */
         * {
             margin: 0;
             padding: 0;
@@ -42,7 +41,7 @@
         }
 
         h1 {
-            color: #4CAF50;
+            color: #CAF2CA;
             font-size: 2rem;
             margin-bottom: 15px;
         }
@@ -123,8 +122,6 @@
         .hidden {
             display: none;
         }
-
-        /* 新增的样式: 增加条形码和二维码显示区域 */
         #barcode, #qrcode {
             margin-top: 30px;
             display: flex;
@@ -161,7 +158,7 @@
 <body>
 
     <div class="container">
-        <h1>条形码和二维码生成器</h1>
+        <h1>百宝箱</h1>
 
         <!-- Tab buttons -->
         <button class="tab mdui-btn" onclick="showSection('qrCodeSection')">二维码生成</button>
