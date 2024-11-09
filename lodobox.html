@@ -24,15 +24,16 @@
       margin: 0;
       overflow: hidden; /* 防止滚动条出现 */
       animation: fadeIn 1s ease-out; /* 网页加载时的动画 */
-      background: radial-gradient(circle, #6200ea, #3700b3); /* 圆形渐变背景 */
-      position: relative;
-      animation: rotateBg 10s infinite linear; /* 背景旋转效果 */
+      background: linear-gradient(45deg, #ff0080, #ff8c00, #4e00ff, #00d4ff); /* 幻彩色渐变背景 */
+      background-size: 400% 400%; /* 背景颜色的渐变范围 */
+      animation: gradientBG 10s ease infinite; /* 背景颜色的流动动画 */
     }
 
-    /* 背景旋转动画 */
-    @keyframes rotateBg {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+    /* 幻彩背景动画 */
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     /* 页面加载动画 */
