@@ -11,6 +11,8 @@
   
   <!-- 引入 qrcode.js 库 -->
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <!-- 引入 jsQR 库（用于二维码解析）-->
+  <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.min.js"></script>
 
   <style>
     /* 通用字体和背景设置 */
@@ -152,6 +154,33 @@
         width: 90%;
       }
     }
+
+    /* 文件上传按钮 */
+    input[type="file"] {
+      display: none; /* 隐藏默认上传按钮 */
+    }
+
+    label {
+      padding: 14px;
+      font-size: 2.5vw;
+      color: #6200ea;
+      background-color: transparent; /* 无色背景 */
+      border: 2px solid #6200ea;
+      border-radius: 8px;
+      cursor: pointer;
+      backdrop-filter: blur(5px); /* 高斯模糊效果 */
+      display: inline-block;
+      transition: background-color 0.3s, transform 0.2s ease-in-out;
+    }
+
+    label:hover {
+      background-color: rgba(98, 0, 234, 0.1);
+      transform: translateY(-5px); /* 按钮上升 */
+    }
+
+    label:active {
+      transform: translateY(2px); /* 按钮点击时下沉 */
+    }
   </style>
 </head>
 <body>
@@ -160,6 +189,10 @@
   <h2>LodoBox</h2>
   <input type="text" id="textInput" placeholder="请输入文本">
   <button onclick="generateQRCode()">生成二维码</button>
+
+  <!-- 文件上传按钮 -->
+  <input type="file" id="fileInput" accept="image/*">
+  <label for="fileInput">上传二维码图片</label>
 
   <!-- QR Code 显示区域 -->
   <div id="qrcode"></div>
@@ -191,6 +224,34 @@
         alert("请输入一些内容！");
       }
     }
+
+    // 文件上传解析二维码
+    document.getElementById('fileInput').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          const img = new Image();
+          img.onload = function() {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0, img.width, img.height);
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const qrCodeData = jsQR(imageData.data, canvas.width, canvas.height);
+
+            if (qrCodeData) {
+              alert("二维码内容：" + qrCodeData.data);
+            } else {
+              alert("未能解析二维码，请重试！");
+            }
+          };
+          img.src = event.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
   </script>
 
 </body>
