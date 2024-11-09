@@ -3,251 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lodo百宝箱</title>
+    <title>EAN-13 条形码生成器</title>
+    <!-- 引入 JsBarcode 库 -->
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mdui@0.4.3/dist/js/mdui.min.js"></script>
-
+    <!-- 引入 Material Design 样式 -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
-        /* 基本样式设置 */
-        * {
+        body {
+            font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f3f4f6;
-            color: #333;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
             flex-direction: column;
-        }
-
-        .container {
-            background-color: #ffffff;
-            border-radius: 10px;
-            padding: 40px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            width: 100%;
-            max-width: 480px;
-            opacity: 0;
-            transform: translateY(-50px);
-            animation: bounceIn 1s forwards;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f5f5f5;
         }
 
         h1 {
-            color: #4CAF50;
-            font-size: 2rem;
-            margin-bottom: 15px;
-        }
-
-        p {
-            font-size: 1.1rem;
-            color: #555;
+            font-size: 24px;
             margin-bottom: 20px;
+            color: #333;
         }
 
-        /* Android 15 风格的按钮 */
-        button.generate-btn {
-            padding: 14px 28px;
-            font-size: 1.2rem;
-            background-color: #6200EE;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-            width: 100%;
-            max-width: 400px;
-            margin-top: 20px;
-        }
-
-        /* 按钮的悬停和点击效果 */
-        button.generate-btn:hover {
-            background-color: #3700B3;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        button.generate-btn:active {
-            transform: translateY(2px);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        /* 输入框样式 - Android 15 风格 */
-        .input-group input {
-            width: 100%;
-            padding: 14px 16px;
-            font-size: 1rem;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            outline: none;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-            margin-top: 10px;
-        }
-
-        /* 输入框的悬停和焦点效果 */
-        .input-group input:focus {
-            border-color: #6200EE;
-            box-shadow: 0 0 6px rgba(98, 0, 238, 0.4);
-        }
-
-        /* 样式 - Android 15 风格 Tab 按钮 */
-        .tab {
-            padding: 12px 24px;
-            cursor: pointer;
-            font-size: 1rem;
-            background-color: #03DAC5;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            margin: 10px 5px;
-            transition: background-color 0.3s ease;
-            width: 100%;
-            max-width: 400px;
-        }
-
-        .tab:hover {
-            background-color: #018786;
-        }
-
-        /* 隐藏元素 */
-        .hidden {
-            display: none;
-        }
-
-        /* 新增的样式: 增加条形码和二维码显示区域 */
-        #barcode, #qrcode {
-            margin-top: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            border-radius: 8px;
+        .container {
+            background-color: #fff;
             padding: 20px;
-            background-color: #f7f7f7;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
         }
 
-        #barcode svg, #qrcode canvas {
-            max-width: 100%;
-            height: auto;
+        input[type="text"] {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            outline: none;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
         }
 
-        @keyframes bounceIn {
-            0% {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-            60% {
-                opacity: 1;
-                transform: translateY(10px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        input[type="text"]:focus {
+            border-color: #6200ea;
+            box-shadow: 0 0 5px rgba(98, 0, 234, 0.5);
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: #6200ea;
+            color: #fff;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #3700b3;
+        }
+
+        button:active {
+            background-color: #6200ea;
+        }
+
+        svg {
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>LodoBox</h1>
+        <h1>条形码生成</h1>
 
-        <!-- Tab buttons -->
-        <button class="tab mdui-btn" onclick="showSection('qrCodeSection')">二维码生成</button>
-        <button class="tab mdui-btn" onclick="showSection('barcodeSection')">条形码生成</button>
+        <!-- 输入框，用户输入要生成条形码的数字 -->
+        <input type="text" id="barcodeInput" placeholder="请输入13位商品识别码" maxlength="13" />
 
-        <!-- 二维码生成部分 -->
-        <div id="qrCodeSection">
-            <p>请输入文本生成二维码：</p>
-            <div class="input-group">
-                <input type="text" id="qrInputText" placeholder="请输入二维码内容" />
-            </div>
-            <button class="generate-btn" onclick="generateQRCode()">生成二维码</button>
+        <!-- 生成按钮 -->
+        <button onclick="generateBarcode()">生成EAN13</button>
 
-            <div id="qrcode" class="hidden">
-                <canvas id="qrcodeCanvas"></canvas>  <!-- 二维码 Canvas -->
-            </div>
-
-            <div class="info-text">
-                <p>注意：所生成的二维码在互相切换生成功能时会遇到无法自动擦除前面所生成的码</p>
-            </div>
-        </div>
-
-        <!-- 条形码生成部分 -->
-        <div id="barcodeSection" class="hidden">
-            <p>请输入数字生成条形码：</p>
-            <div class="input-group">
-                <input type="text" id="barcodeInputText" placeholder="请输入条形码内容" />
-            </div>
-            <button class="generate-btn" onclick="generateBarcode()">生成条形码</button>
-
-            <div id="barcode" class="hidden">
-                <svg id="barcodeSvg"></svg>  <!-- Code 128 条形码 SVG -->
-            </div>
-
-            <div class="info-text">
-                <p>注意：所生成的条形码在互相切换生成功能时会遇到无法自动擦除前面所生成的码</p>
-            </div>
-        </div>
+        <!-- 显示生成的条形码 -->
+        <svg id="barcode"></svg>
     </div>
 
     <script>
-        // 显示指定的部分
-        function showSection(sectionId) {
-            const sections = document.querySelectorAll('.container > div');
-            sections.forEach(section => {
-                section.classList.add('hidden');
-            });
-            document.getElementById(sectionId).classList.remove('hidden');
-        }
-
-        // 生成二维码
-        function generateQRCode() {
-            const inputText = document.getElementById('qrInputText').value;
-            if (!inputText) {
-                alert("请输入文本");
-                return;
-            }
-
-            const canvas = document.getElementById('qrcodeCanvas');
-            QRCode.toCanvas(canvas, inputText, function(error) {
-                if (error) console.error(error);
-            });
-
-            // 显示二维码区域
-            document.getElementById('qrcode').classList.remove('hidden');
-        }
-
-        // 生成条形码 (Code 128)
         function generateBarcode() {
-            const inputText = document.getElementById('barcodeInputText').value;
-            if (!inputText || isNaN(inputText)) {
-                alert("请输入有效的数字");
-                return;
+            var input = document.getElementById('barcodeInput').value;
+            if (input.length === 13 && /^[0-9]+$/.test(input)) {
+                // 使用 JsBarcode 生成 EAN-13 条形码
+                JsBarcode("#barcode", input, {
+                    format: "EAN13",
+                    displayValue: true, // 是否显示条形码的数字
+                    lineColor: "#0b0b0b", // 条形码的颜色
+                    width: 2, // 条形码的宽度
+                    height: 50, // 条形码的高度
+                    margin: 10 // 条形码的边距
+                });
+            } else {
+                alert("请输入有效的13位条形数字！");
             }
-
-            JsBarcode("#barcodeSvg", inputText, {
-                format: "EAN13",
-                lineColor: "#000000",
-                width: 3,
-                height: 50,
-                displayValue: true,
-                font: "monospace",
-                fontSize: 18
-            });
-
-            // 显示条形码区域
-            document.getElementById('barcode').classList.remove('hidden');
         }
     </script>
 
