@@ -17,6 +17,7 @@
     body {
       font-family: 'Roboto', sans-serif;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
@@ -119,6 +120,27 @@
       max-height: 100%;
     }
 
+    /* 底部友情链接样式 */
+    .footer {
+      position: absolute;
+      bottom: 20px;
+      font-size: 14px;
+      color: #555;
+      text-align: center;
+      width: 100%;
+    }
+
+    .footer a {
+      color: #6200ea;
+      text-decoration: none;
+      margin: 0 10px;
+      transition: color 0.3s;
+    }
+
+    .footer a:hover {
+      color: #3700b3;
+    }
+
   </style>
 </head>
 <body>
@@ -128,6 +150,13 @@
     <input type="text" id="textInput" placeholder="请输入文本">
     <button onclick="generateQRCode()">生成二维码</button>
     <div id="qrcode"></div>
+  </div>
+
+  <!-- 底部友情链接 -->
+  <div class="footer">
+    <a href="https://example.com" target="_blank">友情链接 1</a> |
+    <a href="https://example.com" target="_blank">友情链接 2</a> |
+    <a href="https://example.com" target="_blank">友情链接 3</a>
   </div>
 
   <script>
