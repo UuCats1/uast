@@ -159,6 +159,29 @@
       100% { transform: translateX(0); }
     }
 
+    /* 甩尾动画效果 */
+    @keyframes shakeTail {
+      0% { transform: rotate(0deg); }
+      25% { transform: rotate(10deg); }
+      50% { transform: rotate(-10deg); }
+      75% { transform: rotate(5deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    #gear {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      font-size: 3rem;
+      cursor: pointer;
+      transition: transform 0.3s;
+      z-index: 1000;
+    }
+
+    #gear:hover {
+      transform: rotate(90deg);
+    }
+
     /* 响应式设计 */
     @media (max-width: 768px) {
       h2 {
@@ -205,11 +228,14 @@
 </head>
 <body>
 
+  <!-- 齿轮按钮 -->
+  <span id="gear" class="material-icons" onclick="toggleOptions()">settings</span>
+
   <!-- 功能选项栏 -->
   <div id="options">
-    <button onclick="alert('功能选项 1')">功能测试 1</button>
-    <button onclick="alert('功能选项 2')">功能测试 2</button>
-    <button onclick="alert('功能选项 3')">功能测试 3</button>
+    <button onclick="alert('功能选项 1')">功能选项 1</button>
+    <button onclick="alert('功能选项 2')">功能选项 2</button>
+    <button onclick="alert('功能选项 3')">功能选项 3</button>
   </div>
 
   <!-- 直接展示内容 -->
@@ -279,6 +305,15 @@
         reader.readAsDataURL(file);
       }
     });
+
+    function toggleOptions() {
+      const options = document.getElementById('options');
+      const gear = document.getElementById('gear');
+      // 触发甩尾动画效果
+      options.style.animation = 'shakeTail 0.5s ease';
+      options.style.transform = options.style.transform === 'translateX(0)' ? 'translateX(-100%)' : 'translateX(0)';
+      gear.style.transform = gear.style.transform === 'rotate(90deg)' ? 'rotate(0deg)' : 'rotate(90deg)';
+    }
   </script>
 
 </body>
