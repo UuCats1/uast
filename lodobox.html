@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LodoBox</title>
-  
+
   <!-- 引入 Material Design Icon 和 Google Material Fonts -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-  
+
   <!-- 引入 qrcode.js 库 -->
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
   <!-- 引入 jsQR 库（用于二维码解析）-->
@@ -24,24 +24,16 @@
       align-items: center;
       height: 100vh;
       margin: 0;
-      overflow: hidden; /* 防止滚动条出现 */
-      animation: fadeIn 1s ease-out; /* 网页加载时的动画 */
+      overflow: hidden;
       background: linear-gradient(45deg, #ff0080, #ff8c00, #4e00ff, #00d4ff); /* 幻彩色渐变背景 */
-      background-size: 400% 400%; /* 背景颜色的渐变范围 */
-      animation: gradientBG 10s ease infinite; /* 背景颜色的流动动画 */
+      background-size: 400% 400%;
+      animation: gradientBG 10s ease infinite;
     }
 
-    /* 幻彩背景动画 */
     @keyframes gradientBG {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
-    }
-
-    /* 页面加载动画 */
-    @keyframes fadeIn {
-      0% { opacity: 0; transform: translateY(20px); }
-      100% { opacity: 1; transform: translateY(0); }
     }
 
     h2 {
@@ -63,7 +55,7 @@
       box-sizing: border-box;
       transition: border-color 0.3s;
       backdrop-filter: blur(5px); /* 高斯模糊输入框背景 */
-      background: rgba(255, 255, 255, 0.7); /* 让背景有透明感 */
+      background: rgba(255, 255, 255, 0.7);
     }
 
     input:focus {
@@ -77,24 +69,23 @@
       max-width: 400px;
       padding: 14px;
       font-size: 2.5vw;
-      color: #6200ea; /* 按钮文字颜色 */
-      background-color: transparent; /* 背景透明 */
-      border: 2px solid #6200ea; /* 按钮边框 */
+      color: #6200ea;
+      background-color: transparent;
+      border: 2px solid #6200ea;
       border-radius: 8px;
       cursor: pointer;
       transition: background-color 0.3s, transform 0.2s ease-in-out;
-      backdrop-filter: blur(5px); /* 高斯模糊按钮背景 */
-      background: rgba(255, 255, 255, 0.3); /* 高斯模糊下的半透明背景 */
+      backdrop-filter: blur(10px); /* 高斯模糊按钮背景 */
+      background: rgba(255, 255, 255, 0.2); /* 更深的模糊背景效果 */
     }
 
-    /* 按钮的点击动画效果 */
     button:hover {
-      background-color: rgba(98, 0, 234, 0.1); /* 背景轻微变化 */
-      transform: translateY(-5px); /* 按钮上升 */
+      background-color: rgba(98, 0, 234, 0.1);
+      transform: translateY(-5px);
     }
 
     button:active {
-      transform: translateY(2px); /* 按钮点击时下沉 */
+      transform: translateY(2px);
     }
 
     /* QR 码显示区域 */
@@ -105,12 +96,11 @@
       max-width: 500px;
       display: flex;
       justify-content: center;
-      opacity: 0; /* 初始状态下不可见 */
-      animation: bounceIn 1s ease-out forwards; /* 动画的应用 */
-      backdrop-filter: blur(10px); /* 高斯模糊二维码显示区域 */
+      opacity: 0;
+      animation: bounceIn 1s ease-out forwards;
+      backdrop-filter: blur(10px);
     }
 
-    /* QR码显示的甩尾动画 */
     @keyframes bounceIn {
       0% { opacity: 0; transform: scale(0.5); }
       50% { opacity: 1; transform: scale(1.1); }
@@ -120,6 +110,53 @@
     canvas {
       max-width: 100%;
       max-height: 100%;
+    }
+
+    /* 文件上传按钮 */
+    input[type="file"] {
+      display: none;
+    }
+
+    label {
+      padding: 14px;
+      font-size: 2.5vw;
+      color: #6200ea;
+      background-color: transparent;
+      border: 2px solid #6200ea;
+      border-radius: 8px;
+      cursor: pointer;
+      backdrop-filter: blur(15px); /* 增强的高斯模糊效果 */
+      display: inline-block;
+      transition: background-color 0.3s, transform 0.2s ease-in-out;
+      margin-top: 20px;
+    }
+
+    label:hover {
+      background-color: rgba(98, 0, 234, 0.1);
+      transform: translateY(-5px);
+    }
+
+    label:active {
+      transform: translateY(2px);
+    }
+
+    /* 功能选项栏 */
+    #options {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background-color: rgba(255, 255, 255, 0.7);
+      border-radius: 10px;
+      padding: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transform: translateX(-100%);
+      animation: slideIn 0.5s ease forwards;
+      z-index: 999;
+    }
+
+    @keyframes slideIn {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(0); }
     }
 
     /* 响应式设计 */
@@ -137,6 +174,11 @@
         font-size: 5vw;
         width: 90%;
       }
+
+      label {
+        font-size: 4vw;
+        padding: 12px;
+      }
     }
 
     @media (max-width: 480px) {
@@ -153,37 +195,22 @@
         font-size: 6vw;
         width: 90%;
       }
-    }
 
-    /* 文件上传按钮 */
-    input[type="file"] {
-      display: none; /* 隐藏默认上传按钮 */
-    }
-
-    label {
-      padding: 14px;
-      font-size: 2.5vw;
-      color: #6200ea;
-      background-color: transparent; /* 无色背景 */
-      border: 2px solid #6200ea;
-      border-radius: 8px;
-      cursor: pointer;
-      backdrop-filter: blur(5px); /* 高斯模糊效果 */
-      display: inline-block;
-      transition: background-color 0.3s, transform 0.2s ease-in-out;
-    }
-
-    label:hover {
-      background-color: rgba(98, 0, 234, 0.1);
-      transform: translateY(-5px); /* 按钮上升 */
-    }
-
-    label:active {
-      transform: translateY(2px); /* 按钮点击时下沉 */
+      label {
+        font-size: 5vw;
+        padding: 10px;
+      }
     }
   </style>
 </head>
 <body>
+
+  <!-- 功能选项栏 -->
+  <div id="options">
+    <button onclick="alert('功能选项 1')">功能测试 1</button>
+    <button onclick="alert('功能选项 2')">功能测试 2</button>
+    <button onclick="alert('功能选项 3')">功能测试 3</button>
+  </div>
 
   <!-- 直接展示内容 -->
   <h2>LodoBox</h2>
