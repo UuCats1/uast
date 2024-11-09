@@ -80,6 +80,13 @@
       margin-top: 20px;
       width: 100%;
       height: 250px; /* 确保二维码显示足够大 */
+      display: flex;
+      justify-content: center;
+    }
+
+    canvas {
+      max-width: 100%;
+      max-height: 100%;
     }
 
     /* 增加一些小的动画效果 */
@@ -111,8 +118,12 @@
         // 清空上一个二维码
         qrcodeContainer.innerHTML = "";
 
-        // 使用二维码库生成二维码并放到 canvas 元素里
-        QRCode.toCanvas(qrcodeContainer, text, function(error) {
+        // 创建一个新的 canvas 元素
+        const canvas = document.createElement('canvas');
+        qrcodeContainer.appendChild(canvas);
+
+        // 使用二维码库生成二维码并绘制到 canvas 元素里
+        QRCode.toCanvas(canvas, text, function(error) {
           if (error) {
             console.error(error);
             alert("二维码生成失败，请重试！");
