@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lodo百宝箱</title>
-    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js?v=1.0"></script>
-    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js?v=1.0"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mdui@0.4.3/dist/js/mdui.min.js?v=1.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mdui@0.4.3/dist/js/mdui.min.js"></script>
 
     <style>
+        /* 基本样式设置 */
         * {
             margin: 0;
             padding: 0;
@@ -41,7 +42,7 @@
         }
 
         h1 {
-            color: #9DAF50;
+            color: #4CAF50;
             font-size: 2rem;
             margin-bottom: 15px;
         }
@@ -52,10 +53,11 @@
             margin-bottom: 20px;
         }
 
+        /* Android 15 风格的按钮 */
         button.generate-btn {
             padding: 14px 28px;
             font-size: 1.2rem;
-            background-color: #A52F50;
+            background-color: #6200EE;
             color: white;
             border: none;
             border-radius: 8px;
@@ -67,8 +69,9 @@
             margin-top: 20px;
         }
 
+        /* 按钮的悬停和点击效果 */
         button.generate-btn:hover {
-            background-color: #388E3C;
+            background-color: #3700B3;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
@@ -77,6 +80,7 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
+        /* 输入框样式 - Android 15 风格 */
         .input-group input {
             width: 100%;
             padding: 14px 16px;
@@ -89,11 +93,37 @@
             margin-top: 10px;
         }
 
+        /* 输入框的悬停和焦点效果 */
         .input-group input:focus {
             border-color: #6200EE;
             box-shadow: 0 0 6px rgba(98, 0, 238, 0.4);
         }
 
+        /* 样式 - Android 15 风格 Tab 按钮 */
+        .tab {
+            padding: 12px 24px;
+            cursor: pointer;
+            font-size: 1rem;
+            background-color: #03DAC5;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            margin: 10px 5px;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .tab:hover {
+            background-color: #018786;
+        }
+
+        /* 隐藏元素 */
+        .hidden {
+            display: none;
+        }
+
+        /* 新增的样式: 增加条形码和二维码显示区域 */
         #barcode, #qrcode {
             margin-top: 30px;
             display: flex;
@@ -109,10 +139,6 @@
         #barcode svg, #qrcode canvas {
             max-width: 100%;
             height: auto;
-        }
-
-        .hidden {
-            display: none;
         }
 
         @keyframes bounceIn {
@@ -134,77 +160,94 @@
 <body>
 
     <div class="container">
-        <h1>条形码和二维码生成器</h1>
+        <h1>LodoBox</h1>
 
-        <p>请输入文本或13位数字生成二维码或条形码：</p>
-        <div class="input-group">
-            <input type="text" id="inputText" placeholder="请输入二维码或条形码内容" />
+        <!-- Tab buttons -->
+        <button class="tab mdui-btn" onclick="showSection('qrCodeSection')">二维码生成</button>
+        <button class="tab mdui-btn" onclick="showSection('barcodeSection')">条形码生成</button>
+
+        <!-- 二维码生成部分 -->
+        <div id="qrCodeSection">
+            <p>请输入文本生成二维码：</p>
+            <div class="input-group">
+                <input type="text" id="qrInputText" placeholder="请输入二维码内容" />
+            </div>
+            <button class="generate-btn" onclick="generateQRCode()">生成二维码</button>
+
+            <div id="qrcode" class="hidden">
+                <canvas id="qrcodeCanvas"></canvas>  <!-- 二维码 Canvas -->
+            </div>
+
+            <div class="info-text">
+                <p>注意：所生成的二维码在互相切换生成功能时会遇到无法自动擦除前面所生成的码</p>
+            </div>
         </div>
-        <button class="generate-btn" onclick="generateCode()">生成二维码/条形码</button>
 
-        <div id="qrcode" class="hidden">
-            <canvas id="qrcodeCanvas"></canvas>  <!-- 二维码 Canvas -->
-        </div>
+        <!-- 条形码生成部分 -->
+        <div id="barcodeSection" class="hidden">
+            <p>请输入数字生成条形码：</p>
+            <div class="input-group">
+                <input type="text" id="barcodeInputText" placeholder="请输入条形码内容" />
+            </div>
+            <button class="generate-btn" onclick="generateBarcode()">生成条形码</button>
 
-        <div id="barcode" class="hidden">
-            <svg id="barcodeSvg"></svg>  <!-- 条形码 SVG -->
-        </div>
+            <div id="barcode" class="hidden">
+                <svg id="barcodeSvg"></svg>  <!-- Code 128 条形码 SVG -->
+            </div>
 
-        <div class="info-text">
-            <p>注意：二维码生成需要输入文本内容，条形码生成需要输入13位数字。</p>
+            <div class="info-text">
+                <p>注意：所生成的条形码在互相切换生成功能时会遇到无法自动擦除前面所生成的码</p>
+            </div>
         </div>
     </div>
 
     <script>
-        // 生成二维码或条形码
-        function generateCode() {
-            const inputText = document.getElementById('inputText').value.trim();
-            const qrcodeDiv = document.getElementById('qrcode');
-            const barcodeDiv = document.getElementById('barcode');
+        // 显示指定的部分
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.container > div');
+            sections.forEach(section => {
+                section.classList.add('hidden');
+            });
+            document.getElementById(sectionId).classList.remove('hidden');
+        }
 
-            // 清除之前生成的二维码和条形码
-            qrcodeDiv.classList.add('hidden');
-            barcodeDiv.classList.add('hidden');
-            document.getElementById('qrcodeCanvas').innerHTML = '';
-            document.getElementById('barcodeSvg').innerHTML = '';
-
-            if (inputText === '') {
-                alert("请输入内容");
+        // 生成二维码
+        function generateQRCode() {
+            const inputText = document.getElementById('qrInputText').value;
+            if (!inputText) {
+                alert("请输入文本");
                 return;
             }
 
-            // 判断输入内容
-            if (isNaN(inputText)) {
-                // 输入的是文本，生成二维码
-                QRCode.toCanvas(document.getElementById('qrcodeCanvas'), inputText, function(error) {
-                    if (error) {
-                        console.error("二维码生成失败:", error);
-                    } else {
-                        qrcodeDiv.classList.remove('hidden');
-                    }
-                });
-            } else if (inputText.length === 13 && !isNaN(inputText)) {
-                // 输入的是13位数字，生成条形码
-                try {
-                    // 清空之前的条形码
-                    document.getElementById('barcodeSvg').innerHTML = '';
+            const canvas = document.getElementById('qrcodeCanvas');
+            QRCode.toCanvas(canvas, inputText, function(error) {
+                if (error) console.error(error);
+            });
 
-                    JsBarcode("#barcodeSvg", inputText, {
-                        format: "EAN13", // EAN13 格式
-                        lineColor: "#000000",
-                        width: 3,
-                        height: 80,
-                        displayValue: true,
-                        font: "monospace",
-                        fontSize: 18
-                    });
-                    barcodeDiv.classList.remove('hidden');
-                } catch (error) {
-                    console.error("条形码生成失败:", error);
-                }
-            } else {
-                alert("请输入有效的13位数字条形码或文本内容生成二维码");
+            // 显示二维码区域
+            document.getElementById('qrcode').classList.remove('hidden');
+        }
+
+        // 生成条形码 (Code 128)
+        function generateBarcode() {
+            const inputText = document.getElementById('barcodeInputText').value;
+            if (!inputText || isNaN(inputText)) {
+                alert("请输入有效的数字");
+                return;
             }
+
+            JsBarcode("#barcodeSvg", inputText, {
+                format: "CODE128",
+                lineColor: "#000000",
+                width: 3,
+                height: 80,
+                displayValue: true,
+                font: "monospace",
+                fontSize: 18
+            });
+
+            // 显示条形码区域
+            document.getElementById('barcode').classList.remove('hidden');
         }
     </script>
 
