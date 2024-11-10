@@ -13,6 +13,8 @@
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
   <!-- 引入 jsQR 库（用于二维码解析）-->
   <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.min.js"></script>
+  <!-- 引入二维码扫描库 -->
+  <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
 
   <style>
     /* 通用字体和背景设置 */
@@ -183,6 +185,19 @@
       background-color: #3700b3;
     }
 
+    /* 扫码器 */
+    #qr-scanner {
+      display: none;
+      width: 100%;
+      max-width: 600px;
+      margin-top: 20px;
+    }
+
+    #qr-scanner canvas {
+      max-width: 100%;
+      max-height: 100%;
+    }
+
     /* 响应式设计 */
     @media (max-width: 768px) {
       h2 {
@@ -236,12 +251,12 @@
   <div id="menu">
     <button onclick="showQRCodePage()">生成二维码</button>
     <button onclick="showFileUploadPage()">上传二维码图片</button>
+    <button onclick="startScanner()">扫码二维码</button>
   </div>
 
   <!-- 页面内容 -->
   <div id="content">
     <h2>LodoBox</h2>
-    <h3>所有功能已集成在左上角按钮当中🤗</h3>
     <div id="pageQRCode" style="display: none;">
       <input type="text" id="textInput" placeholder="请输入文本">
       <button onclick="generateQRCode()">生成二维码</button>
@@ -250,6 +265,10 @@
     <div id="pageFileUpload" style="display: none;">
       <input type="file" id="fileInput" accept="image/*">
       <label for="fileInput">上传二维码图片</label>
+    </div>
+    <!-- 扫码器区域 -->
+    <div id="qr-scanner">
+      <div id="reader"></div>
     </div>
   </div>
 
@@ -262,13 +281,38 @@
     function showQRCodePage() {
       document.getElementById('pageQRCode').style.display = 'block';
       document.getElementById('pageFileUpload').style.display = 'none';
+      document.getElementById('qr-scanner').style.display = 'none';
       toggleMenu(); // 关闭菜单
     }
 
     function showFileUploadPage() {
       document.getElementById('pageQRCode').style.display = 'none';
       document.getElementById('pageFileUpload').style.display = 'block';
+      document.getElementById('qr-scanner').style.display = 'none';
       toggleMenu(); // 关闭菜单
+    }
+
+    function startScanner() {
+      document.getElementById('pageQRCode').style.display = 'none';
+      document.getElementById('pageFileUpload').style.display = 'none';
+      document.getElementById('qr-scanner').style.display = 'block';
+      toggleMenu(); // 关闭菜单
+
+      const html5QrcodeScanner = new Html5QrcodeScanner(
+        "reader", 
+        { fps: 10, qrbox: 250 }
+      );
+      html5QrcodeScanner.render(onScanSuccess, onScanError);
+    }
+
+    function onScanSuccess(decodedText, decodedResult) {
+      alert("二维码内容：" + decodedText);
+      // 停止扫码
+      html5QrcodeScanner.clear();
+    }
+
+    function onScanError(errorMessage) {
+      // 这里可以处理扫描失败的情况
     }
 
     function generateQRCode() {
