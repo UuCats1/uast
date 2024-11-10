@@ -198,48 +198,6 @@
       max-height: 100%;
     }
 
-    /* 响应式设计 */
-    @media (max-width: 768px) {
-      h2 {
-        font-size: 6vw;
-      }
-
-      input {
-        font-size: 4vw;
-        width: 90%;
-      }
-
-      button {
-        font-size: 5vw;
-        width: 90%;
-      }
-
-      label {
-        font-size: 4vw;
-        padding: 12px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      h2 {
-        font-size: 8vw;
-      }
-
-      input {
-        font-size: 5vw;
-        width: 90%;
-      }
-
-      button {
-        font-size: 6vw;
-        width: 90%;
-      }
-
-      label {
-        font-size: 5vw;
-        padding: 10px;
-      }
-    }
   </style>
 </head>
 <body>
@@ -295,8 +253,11 @@
     function startScanner() {
       document.getElementById('pageQRCode').style.display = 'none';
       document.getElementById('pageFileUpload').style.display = 'none';
-      document.getElementById('qr-scanner').style.display = 'block';
+      const scanner = document.getElementById('qr-scanner');
+      scanner.style.display = 'block';  // 确保扫码区域显示
       toggleMenu(); // 关闭菜单
+
+      console.log('启动扫码器...'); // 调试输出
 
       const html5QrcodeScanner = new Html5QrcodeScanner(
         "reader", 
