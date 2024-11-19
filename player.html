@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>音乐播放器</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f4f4f4;
+    }
+    .player {
+      width: 300px;
+      text-align: center;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    .player button {
+      margin: 10px 0;
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .player button:disabled {
+      background-color: #aaa;
+      cursor: not-allowed;
+    }
+    .player input[type="file"] {
+      display: none;
+    }
+    .player label {
+      display: block;
+      margin-bottom: 10px;
+      color: #007BFF;
+      cursor: pointer;
+    }
+    .progress-bar {
+      width: 100%;
+      background-color: #e9ecef;
+      border-radius: 5px;
+      height: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+    .progress-bar div {
+      height: 100%;
+      background-color: #007BFF;
+      width: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" class="player">
+    <label for="file-input">上传音乐文件(dsf格式)</label>
+    <input type="file" id="file-input" accept=".wav,.mp3,.flac" />
+    <button id="play-btn" disabled>Play</button>
+    <div class="progress-bar">
+      <div id="progress"></div>
+    </div>
+    <p id="status">没有文件加载</p>
+  </div>
+
+  <script>
+    // Get UI elements
+    const fileInput = document.getElementById('file-input');
+    const playButton = document.getElementById('play-btn');
+    const progressBar = document.getElementById('progress');
+    const status = document.getElementById('status');
+
+    let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    let audioBuffer = null;
+    let audioSource = null;
+    let isPlaying = false;
+
+    // Handle file input
+    fileInput.addEventListener('change', async (event) => {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      status.textContent = `Loading ${file.name}...`;
+
+      try {
+        const arrayBuffer = await file.arrayBuffer();
+        audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+        playButton.disabled = false;
+        status.textContent = `Loaded: ${file.name}`;
+      } catch (error) {
+        console.error('Error decoding audio file:', error);
+        status.textContent = 'Failed to load file.';
+      }
+    });
+
+    // Toggle play/pause
+    playButton.addEventListener('click', () => {
+      if (isPlaying) {
+        stopAudio();
+      } else {
+        playAudio();
+      }
+    });
+
+    function playAudio() {
+      if (!audioBuffer) return;
+
+      // Create a new source each time (Web Audio API requirement)
+      audioSource = audioCtx.createBufferSource();
+      audioSource.buffer = audioBuffer;
+      audioSource.connect(audioCtx.destination);
+
+      // Start playback
+      audioSource.start();
+      isPlaying = true;
+      playButton.textContent = 'Pause';
+      status.textContent = 'Playing...';
+
+      // Track playback progress
+      const startTime = audioCtx.currentTime;
+      const duration = audioBuffer.duration;
+
+      const interval = setInterval(() => {
+        if (!isPlaying) {
+          clearInterval(interval);
+          return;
+        }
+
+        const elapsedTime = audioCtx.currentTime - startTime;
+        const progressPercentage = Math.min(
+          (elapsedTime / duration) * 100,
+          100
+        );
+        progressBar.style.width = `${progressPercentage}%`;
+
+        if (progressPercentage >= 100) {
+          clearInterval(interval);
+          stopAudio();
+        }
+      }, 100);
+
+      // Handle end of playback
+      audioSource.onended = () => {
+        stopAudio();
+      };
+    }
+
+    function stopAudio() {
+      if (audioSource) {
+        audioSource.stop();
+        audioSource.disconnect();
+        audioSource = null;
+      }
+
+      isPlaying = false;
+      playButton.textContent = 'Play';
+      status.textContent = 'Paused';
+      progressBar.style.width = '0%';
+    }
+  </script>
+</body>
+</html>
